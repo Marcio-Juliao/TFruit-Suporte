@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - TFruit</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="shortcut icon" href="../src/img/favicon.png" type="image/x-icon">
+   
+</head>
+<body>
+    <!--Nav-->
+
+    <div class="nav">
+        <div class="nav_esquerda">
+
+        </div>
+        <div class="nav_direita">
+            <div>
+            Suporte <br>
+            TFruit
+            </div>
+            <div class="img_nav">
+            <img src="imagens/banana.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="container_chat">
+        <div class="container_input">
+            <p>&nbsp; BobIA - Suporte pela IA &nbsp;</p>
+            <input type="text" id="input_pergunta" placeholder="Insira aqui sua Pergunta">
+            <button class="botao_pergunta" onclick="gerarResposta()">Enviar Pergunta</button>
+        </div>
+        <div class="container_resposta">
+            <textarea name="textarea_resposta" id="resposta" placeholder="A resposta aparecerá Aqui!" disabled></textarea>
+        </div>
+    </div>
+
+    <!--Footer-->
+    <div class="footer">
+        <img src="imagens/Logo_footer.png" alt="">
+    </div>
+</body>
+</html>
+
+<script>
+
+    async function gerarResposta() {
+        resposta.style.textAlign="center";
+        resposta.innerText = "Aguarde...";
+        const pergunta = input_pergunta.value;
+
+        const response = await fetch('http://localhost:3334/perguntar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ pergunta })
+        });
+
+        const data = await response.json();
+
+        resposta.style.textAlign="justify";
+        resposta.innerText = data.resultado;
+    }
+
+</script>
+
